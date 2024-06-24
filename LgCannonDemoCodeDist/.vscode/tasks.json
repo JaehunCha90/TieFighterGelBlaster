@@ -1,0 +1,32 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "LUPA Task: Run",
+            "type": "process",
+            "command": "${command:lupa-studio-devicemanager.installApp}",
+            "args": ["", ""],
+            "dependsOn": ["LUPA Task: Build and Package"]
+        },
+        {
+            "label": "LUPA Task: Configure",
+            "type": "process",
+            "command": "${command:lupa-studio.sdkmanager.configure}",
+            "dependsOn": ["LUPA Task: Clean"]
+        },
+        {
+            "label": "LUPA Task: Build and Package",
+            "type": "process",
+            "command": "${command:lupa-studio.sdkmanager.build}",
+            "dependsOrder": "sequence",
+            "dependsOn": ["LUPA Task: Configure"]
+        },
+        {
+            "label": "LUPA Task: Clean",
+            "type": "process",
+            "command": "${command:lupa-studio.sdkmanager.clean}"
+        }
+    ]
+}

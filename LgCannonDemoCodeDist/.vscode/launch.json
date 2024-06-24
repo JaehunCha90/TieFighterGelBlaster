@@ -1,0 +1,98 @@
+{
+    "configurations": [
+        {
+            "name": "Launch LUPA App",
+            "request": "launch",
+            "type": "lupalaunchselector"
+        },
+        {
+            "name": "Launch LUPA App without Debug",
+            "request": "launch",
+            "type": "lupaappdbg",
+            "program": "files/launcher.js",
+            "preLaunchTask": "LUPA Task: Run"
+        },
+        {
+            "name": "Debug LUPA Device",
+            "cwd": "${workspaceFolder}",
+            "executable": "${auto-select}",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "openocd",
+            "searchDir": [
+                "${config:lupastudio.sdkroot}/${config:lupastudio.activeSdk}/sdk/xpack-openocd-0.11.0-1/scripts"
+            ],
+            "device": "dqc_lg8211a1p_larissa",
+            "interface": "swd",
+            "showDevDebugOutput": "none",
+            "serialNumber": "",
+            "armToolchainPath": "${config:lupastudio.toolchainPath}/bin",
+            "gdbPath": "${config:lupastudio.gdbPath}",
+            "configFiles": [
+                "${config:lupastudio.sdkroot}/${config:lupastudio.activeSdk}/sdk/boards/arm/dqc_lg8211a1p_larissa/support/openocd.cfg"
+            ],
+            "overrideLaunchCommands": [
+                "monitor reset init",
+                "-target-download",
+                "set backtrace limit 30",
+                "set *((uint32_t*)0xE000EDFC)|=0x00007F0"
+            ],
+            "runToEntryPoint": "main"
+        },
+        {
+            "name": "Attach LUPA Device",
+            "cwd": "${workspaceFolder}",
+            "executable": "${auto-select}",
+            "request": "attach",
+            "type": "cortex-debug",
+            "servertype": "openocd",
+            "searchDir": [
+                "${config:lupastudio.sdkroot}/${config:lupastudio.activeSdk}/sdk/xpack-openocd-0.11.0-1/scripts"
+            ],
+            "device": "dqc_lg8211a1p_larissa",
+            "interface": "swd",
+            "showDevDebugOutput": "none",
+            "gdbPath": "${config:lupastudio.gdbPath}",
+            "configFiles": [
+                "${config:lupastudio.sdkroot}/${config:lupastudio.activeSdk}/sdk/boards/arm/dqc_lg8211a1p_larissa/support/openocd.cfg"
+            ],
+            "overrideAttachCommands": [
+                "monitor halt",
+                "set backtrace limit 30",
+                "set *((uint32_t*)0xE000EDFC)|=0x00007F0"
+            ]
+        },
+        {
+            "name": "Debug LUPA Emulator",
+            "cwd": "${workspaceFolder}",
+            "executable": "${auto-select}",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "external",
+            "gdbTarget": "localhost:3333",
+            "gdbPath": "${config:lupastudio.gdbPath}",
+            "showDevDebugOutput": "none",
+            "overrideLaunchCommands": [
+                "monitor reset init",
+                "-target-download",
+                "set backtrace limit 30"
+            ],
+            "runToEntryPoint": "main"
+        },
+        {
+            "name": "Attach LUPA Emulator",
+            "cwd": "${workspaceFolder}",
+            "executable": "${auto-select}",
+            "request": "attach",
+            "type": "cortex-debug",
+            "servertype": "external",
+            "gdbTarget": "localhost:3333",
+            "gdbPath": "${config:lupastudio.gdbPath}",
+            "showDevDebugOutput": "none",
+            "overrideAttachCommands": [
+                "monitor halt",
+                "set backtrace limit 30"
+            ]
+        }
+    ]
+}
